@@ -90,8 +90,8 @@ print(predicted_proba.shape)
 
 
 # Save the model #
-with open('model', 'wb') as file:
+with open('../Integration/model', 'wb') as file:
     pickle.dump(reg, file)
 
-with open('scaler', 'wb') as file:
+with open('../Integration/scaler', 'wb') as file:
     pickle.dump(absenteeism_scaler, file)
