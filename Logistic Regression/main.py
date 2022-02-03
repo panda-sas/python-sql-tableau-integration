@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 # Logistic regression with sklearn #
 from sklearn.linear_model import LogisticRegression
-from sklearn import  metrics
+from sklearn import metrics
 
 # Load the data #
 data_preprocessed = pd.read_csv('df_preprocessed.csv')
@@ -67,4 +67,12 @@ model_outputs = reg.predict(x_train)
 # Accuracy  = Correct predictions / Total Observations #
 np.sum((model_outputs == y_train)) / model_outputs.shape[0]
 
+# Finding the intercept and coefficients #
+feature_name = unscaled_inputs.columns.values
+summary_table = pd.DataFrame(columns=['Feature name'], data=feature_name)
+summary_table['Coefficient'] = np.transpose(reg.coef_)
 
+summary_table.index = summary_table.index + 1
+summary_table.loc[0] = ['Intercept', reg.intercept_[0]]
+summary_table = summary_table.sort_index()
+print(summary_table)
