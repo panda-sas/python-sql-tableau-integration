@@ -13,6 +13,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 
+import pickle
+
 # Load the data #
 data_preprocessed = pd.read_csv('df_preprocessed.csv')
 # print(data_preprocessed.head())
@@ -76,3 +78,20 @@ summary_table.index = summary_table.index + 1
 summary_table.loc[0] = ['Intercept', reg.intercept_[0]]
 summary_table = summary_table.sort_index()
 print(summary_table)
+
+# Interpreting the coefficients #
+summary_table['Odds Ratio'] = np.exp(summary_table.Coefficient)
+summary_table.sort_values('Odds Ratio', ascending=False)
+
+# Testing the model #
+reg.score(x_test, y_test)
+predicted_proba = reg.predict_proba(x_test)
+print(predicted_proba.shape)
+
+
+# Save the model #
+with open('model', 'wb') as file:
+    pickle.dump(reg, file)
+
+with open('scaler', 'wb') as file:
+    pickle.dump(absenteeism_scaler, file)
